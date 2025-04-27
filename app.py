@@ -1,31 +1,24 @@
-# streamlit_app.py
-
 import streamlit as st
 import pandas as pd
 import joblib
+import json
 
-# --- Load models ---
+# Load Models
 knn = joblib.load('Models/knn_model.pkl')
 tree = joblib.load('Models/decision_tree_model.pkl')
 kmeans = joblib.load('Models/kmeans_model.pkl')
 scaler = joblib.load('Models/scaler.pkl')
 
-# --- Load Risk Mapping (Optional if you saved it) ---
-risk_mapping = {
-    0: 'High Risk',         # from your real cluster analysis
-    1: 'Very High Risk',
-    2: 'Low Risk',
-    3: 'Medium Risk'
-}
+risk_mapping = json.loads('Models/risk_mapping.json')
 
-# --- App Title ---
-st.title("🏀 NBA Player Injury Risk Predictor")
+# App Title
+st.title("NBA Player Injury Risk Predictor")
 
 st.write("""
-Input player weekly statistics below and predict their injury risk category based on dynamic player workload models!
+Input player statistics below and predict their injury risk category based on machine learning models!
 """)
 
-# --- Sidebar for Inputs ---
+# Sidebar for Inputs
 st.sidebar.header("Player Stats Input")
 
 games_played = st.sidebar.number_input("Games Played This Season", min_value=0, max_value=200, value=20)
@@ -38,7 +31,7 @@ rolling5_points = st.sidebar.number_input("Rolling 5-Game Avg Points", min_value
 back_to_back_games = st.sidebar.number_input("Back-to-Back Games Played", min_value=0, max_value=50, value=1)
 injury_count = st.sidebar.number_input("Past Injury Count", min_value=0, max_value=100, value=0)
 
-# --- Collect Input into DataFrame ---
+# Collect Input into DataFrame
 new_player = pd.DataFrame({
     'games_played': [games_played],
     'avg_minutes': [avg_minutes],
@@ -51,7 +44,7 @@ new_player = pd.DataFrame({
     'injury_count': [injury_count]
 })
 
-# --- Prediction Button ---
+# Prediction Button 
 if st.button('Predict Injury Risk'):
     # Scale input
     new_player_scaled = scaler.transform(new_player)
@@ -66,11 +59,11 @@ if st.button('Predict Injury Risk'):
     tree_risk = risk_mapping.get(tree_pred, 'Unknown')
     kmeans_risk = risk_mapping.get(kmeans_pred, 'Unknown')
 
-    # --- Output Results ---
-    st.subheader("🧠 Injury Risk Predictions")
+    # Output Results
+    st.subheader("Injury Risk Predictions")
 
     st.write(f"**KNN Model Prediction:** {knn_risk} (Cluster {knn_pred})")
     st.write(f"**Decision Tree Prediction:** {tree_risk} (Cluster {tree_pred})")
     st.write(f"**KMeans Group Prediction:** {kmeans_risk} (Cluster {kmeans_pred})")
 
-    st.success(f"🔮 Overall Predicted Risk Level: **{tree_risk}**")
+    st.success(f"Overall Predicted Risk Level: **{tree_risk}**")
