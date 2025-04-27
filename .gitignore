@@ -175,6 +175,7 @@ cython_debug/
 
 # Ignore data files
 Cleaned Data/Finished/PlayerStatistics.csv
+Cleaned Data/Finished/player_week_data_final.csv
 # Ignore all CSVs in that folder (optional)
 # Cleaned Data/Finished/*.csv
 
