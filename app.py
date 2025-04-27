@@ -8,8 +8,8 @@ knn = joblib.load('Models/knn_model.pkl')
 tree = joblib.load('Models/decision_tree_model.pkl')
 kmeans = joblib.load('Models/kmeans_model.pkl')
 scaler = joblib.load('Models/scaler.pkl')
-
-risk_mapping = json.loads('Models/risk_mapping.json')
+with open('Models/risk_mapping.json', 'r') as f:
+    risk_mapping = json.load(f)
 
 # App Title
 st.title("NBA Player Injury Risk Predictor")
@@ -55,9 +55,9 @@ if st.button('Predict Injury Risk'):
     kmeans_pred = kmeans.predict(new_player_scaled)[0]
 
     # Map predictions to risk levels
-    knn_risk = risk_mapping.get(knn_pred, 'Unknown')
-    tree_risk = risk_mapping.get(tree_pred, 'Unknown')
-    kmeans_risk = risk_mapping.get(kmeans_pred, 'Unknown')
+    knn_risk = risk_mapping.get(str(knn_pred), 'Unknown')
+    tree_risk = risk_mapping.get(str(tree_pred), 'Unknown')
+    kmeans_risk = risk_mapping.get(str(kmeans_pred), 'Unknown')
 
     # Output Results
     st.subheader("Injury Risk Predictions")
