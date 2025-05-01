@@ -173,11 +173,13 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Ignore data files
-Cleaned Data/Finished/PlayerStatistics.csv
-Cleaned Data/Finished/player_week_data_final.csv
-# Ignore all CSVs in that folder (optional)
-# Cleaned Data/Finished/*.csv
+# Ignore specific data files
+player_injures_2010-2025.csv
+player_week_data_final.csv
+
+# Ignore everything in the Data folder
+Data/
+
 
 # Jupyter checkpoints (optional, if you're using notebooks)
 .ipynb_checkpoints/
