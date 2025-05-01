@@ -172,3 +172,22 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Ignore specific data files
+player_injures_2010-2025.csv
+player_week_data_final.csv
+
+# Ignore everything in the Data folder
+Data/
+
+
+# Jupyter checkpoints (optional, if you're using notebooks)
+.ipynb_checkpoints/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Mac system files (optional if you're on Mac)
+.DS_Store
+
