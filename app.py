@@ -85,8 +85,6 @@ if page == "Original Models":
         st.write(f"**Decision Tree Prediction:** {tree_risk} (Cluster {tree_pred})")
         st.write(f"**KMeans Group Prediction:** {kmeans_risk} (Cluster {kmeans_pred})")
 
-        st.success(f"Overall Predicted Risk Level: **{tree_risk}**")
-
 # Balanced Models
 elif page == "Balanced Models":
     st.subheader("Balanced Model Predictions (Logistic Regression, Random Forest, XGBoost)")
@@ -103,7 +101,8 @@ elif page == "Balanced Models":
         log_proba = log_model.predict_proba(new_player_scaled)[0][1]
         rf_proba = rf_model.predict_proba(new_player_scaled)[0][1]
         xgb_proba = xgb_model.predict_proba(new_player_scaled)[0][1]
-        Avg = (log_proba + rf_proba + xgb_proba) / 2
+        
+        Avg = (log_proba + rf_proba + xgb_proba) / 3
 
         st.write(f"**Logistic Regression Prediction:**(Probability: {log_proba:.2f})")
         st.write(f"**Random Forest Prediction:** (Probability: {rf_proba:.2f})")
